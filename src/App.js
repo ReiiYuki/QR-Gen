@@ -30,11 +30,13 @@ class App extends Component {
 
 	onChange = ({ target: { value, name }}) => {
 		this.setState({ [name] : value })
-		localStorage.setItem(name, value)
 	}
 
 	updateQr() {
 		const { imageUrl, text } = this.state
+		localStorage.setItem('imageUrl', imageUrl)
+		localStorage.setItem('text', text)
+		window.history.pushState(null, '', `?text=${text}&imageUrl=${imageUrl}`)
 		text && QrCodeWithLogo.toCanvas({
 			canvas: this.qr,
 			width: 480,
