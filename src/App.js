@@ -116,6 +116,7 @@ class App extends Component {
 									Download
 								</Button>
 							</a>
+							<span>Powered by ReiiYuki on <a href="https://github.com/ReiiYuki/QR-Gen">https://github.com/ReiiYuki/QR-Gen</a></span>
 						</Col>
 					</Row>
 				</Card>
