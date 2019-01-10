@@ -1,13 +1,13 @@
 {
-  "main.js": "/static/js/main.411e62e2.chunk.js",
-  "main.js.map": "/static/js/main.411e62e2.chunk.js.map",
-  "static/css/1.b9ca4842.chunk.css": "/static/css/1.b9ca4842.chunk.css",
-  "static/js/1.0e8ec00c.chunk.js": "/static/js/1.0e8ec00c.chunk.js",
-  "static/js/1.0e8ec00c.chunk.js.map": "/static/js/1.0e8ec00c.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
-  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/css/1.b9ca4842.chunk.css.map": "/static/css/1.b9ca4842.chunk.css.map",
-  "index.html": "/index.html",
-  "precache-manifest.63317a3e77cbf10acbf46074984be2a7.js": "/precache-manifest.63317a3e77cbf10acbf46074984be2a7.js",
-  "service-worker.js": "/service-worker.js"
+  "main.js": "/QR-Gen/static/js/main.411e62e2.chunk.js",
+  "main.js.map": "/QR-Gen/static/js/main.411e62e2.chunk.js.map",
+  "static/css/1.b9ca4842.chunk.css": "/QR-Gen/static/css/1.b9ca4842.chunk.css",
+  "static/js/1.2e22b252.chunk.js": "/QR-Gen/static/js/1.2e22b252.chunk.js",
+  "static/js/1.2e22b252.chunk.js.map": "/QR-Gen/static/js/1.2e22b252.chunk.js.map",
+  "runtime~main.js": "/QR-Gen/static/js/runtime~main.46d6d527.js",
+  "runtime~main.js.map": "/QR-Gen/static/js/runtime~main.46d6d527.js.map",
+  "static/css/1.b9ca4842.chunk.css.map": "/QR-Gen/static/css/1.b9ca4842.chunk.css.map",
+  "index.html": "/QR-Gen/index.html",
+  "precache-manifest.de6a7be0b269ae8f1d54fa4a050102ef.js": "/QR-Gen/precache-manifest.de6a7be0b269ae8f1d54fa4a050102ef.js",
+  "service-worker.js": "/QR-Gen/service-worker.js"
 }
