@@ -1,9 +1,9 @@
 import 'antd/dist/antd.css'
 
-import { Button, Card, Col, Input, Row } from 'antd';
-import React, { Component } from 'react';
+import { Card, Col, Input, Row } from 'antd'
+import React, { Component } from 'react'
 
-import QrCodeWithLogo from 'qr-code-with-logo';
+import QrCodeWithLogo from 'qr-code-with-logo'
 
 class App extends Component {
 	state = {
@@ -32,19 +32,22 @@ class App extends Component {
 		this.setState({ [name] : value })
 	}
 
-	updateQr() {
+	async updateQr() {
 		const { imageUrl, text } = this.state
 		localStorage.setItem('imageUrl', imageUrl)
 		localStorage.setItem('text', text)
 		window.history.pushState(null, '', `?text=${text}&imageUrl=${imageUrl}`)
-		text && QrCodeWithLogo.toCanvas({
-			canvas: this.qr,
-			width: 480,
-			content: text,
-			logo: {
-				src: imageUrl,
-			}
-		})
+		if (text) {
+			await QrCodeWithLogo.toCanvas({
+				canvas: this.qr,
+				width: 480,
+				content: text,
+				logo: {
+					src: imageUrl,
+				}
+			})
+			this.qr.fillText(text, 24, 450)
+		}
 	}
 
   	render() {
@@ -101,21 +104,6 @@ class App extends Component {
 									marginBottom: 16
 								}}
 							/>
-							<a
-								download="qr.png"
-								href={this.qr && this.qr.toDataURL('image/png')}
-							>
-								<Button
-									type="primary"
-									icon="download"
-									size="large"
-									style={{
-										width: '100%',
-									}}
-								>
-									Download
-								</Button>
-							</a>
 							<span>Powered by ReiiYuki on <a href="https://github.com/ReiiYuki/QR-Gen">https://github.com/ReiiYuki/QR-Gen</a></span>
 						</Col>
 					</Row>
