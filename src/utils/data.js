@@ -1,4 +1,5 @@
 import qs from 'qs'
+import ReactGA from 'react-ga';
 
 export function getDefaultData(dataFields) {
     const data = {}
@@ -22,6 +23,7 @@ export function updateLocalStorage(data) {
 export function updateQS(data) {
     const cleanData = cleanUpData(data)
     window.history.pushState(null, '', `?${qs.stringify(cleanData)}`)
+    ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
 export function cleanUpData(data) {
