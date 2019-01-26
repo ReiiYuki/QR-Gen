@@ -45,8 +45,8 @@ class App extends Component {
 
 	updateTitleAsText(prevState) {
 		const { textAsTitle, text } = this.state
-		const { text: prevText } = prevState
-		const shouldUpdate = text !== prevText
+		const { text: prevText, textAsTitle: prevTextAsTitle } = prevState
+		const shouldUpdate = text !== prevText || textAsTitle !== prevTextAsTitle
 		if (shouldUpdate && textAsTitle) {
 			this.setState({
 				title: text,
@@ -89,9 +89,10 @@ class App extends Component {
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center', 
-					height: '100vh',
-					width: '100vw',
+					width: '100%',
+					minHeight: '100vh',
 					background: 'gray',
+					padding: '24px 0',
 				}}
 			>
 				<Card style={{
@@ -155,7 +156,8 @@ class App extends Component {
 							>Use Text as Title</Checkbox>
 							<a
 								ref={e => this.download = e}
-								download={`${text}.png`}	
+								download={`${text}.png`}
+								href="/"
 							>
 								<Button	
 									type="primary"	
