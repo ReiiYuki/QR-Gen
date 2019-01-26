@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/QR-Gen/static/js/runtime~main.46d6d527.js"
   },
   {
-    "revision": "c0d1f2939cbba70f6243",
-    "url": "/QR-Gen/static/js/main.c0d1f293.chunk.js"
+    "revision": "577e1c9c3a15032f30b8",
+    "url": "/QR-Gen/static/js/main.577e1c9c.chunk.js"
   },
   {
     "revision": "a2abf2ef43637f2bc156",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/QR-Gen/static/css/1.4fe61b15.chunk.css"
   },
   {
-    "revision": "4866fb7dc986c0cf017ff9e0b7378bf7",
+    "revision": "9f06ac0b11c69f6b6705e58d522843e2",
     "url": "/QR-Gen/index.html"
   }
 ];

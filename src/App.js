@@ -79,7 +79,7 @@ class App extends Component {
 		context.font = '14px Kanit'
 		context.fillStyle = 'black'
 		context.textAlign = 'center'
-		context.fillText(title || '', this.qr.width/2, this.qr.height)
+		context.fillText(title || '', this.qr.width/2, this.qr.height - 14)
 	}
 
   	render() {
