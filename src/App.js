@@ -1,6 +1,6 @@
 import 'antd/dist/antd.css'
 
-import { Card, Col, Input, Row, Button } from 'antd'
+import { Card, Col, Input, Row, Button, Checkbox } from 'antd'
 import React, { Component } from 'react'
 import { getDefaultData, updateQS, updateLocalStorage } from 'utils/data'
 import { loadDataUrlFromImage, downloadImage } from 'utils/image'
@@ -12,13 +12,15 @@ class App extends Component {
 		imageUrl: '',
 		text: '',
 		title: '',
+		textAsTitle: false,
 	}
 
 	componentDidMount() {
 		this.updateDefaultData()
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps, prevState) {
+		this.updateTitleAsText(prevState)
 		this.updateData()
 		this.updateQr()
 	}
@@ -32,9 +34,24 @@ class App extends Component {
 		this.setState({ [name] : value })
 	}
 
+	onChecked = ({ target: { checked, name }}) => {
+		this.setState({ [name] : checked })
+	}
+
 	updateData() {
 		updateQS(this.state)
 		updateLocalStorage(this.state)
+	}
+
+	updateTitleAsText(prevState) {
+		const { textAsTitle, text } = this.state
+		const { text: prevText } = prevState
+		const shouldUpdate = text !== prevText
+		if (shouldUpdate && textAsTitle) {
+			this.setState({
+				title: text,
+			})
+		}
 	}
 
 	async updateQr() {
@@ -129,10 +146,17 @@ class App extends Component {
 									marginBottom: 16
 								}}
 							/>
+							<Checkbox
+								name="textAsTitle"
+								style={{
+									marginBottom: 16
+								}}
+								onChange={this.onChecked}
+							>Use Text as Title</Checkbox>
 							<a
 								ref={e => this.download = e}
 								download={`${text}.png`}	
-							>	
+							>
 								<Button	
 									type="primary"	
 									icon="download"	
