@@ -2,6 +2,8 @@ import 'antd/dist/antd.css'
 
 import { Card, Col, Input, Row, Button } from 'antd'
 import React, { Component } from 'react'
+import { getDefaultData, updateQS, updateLocalStorage } from 'utils/data'
+import { loadDataUrlFromImage, downloadImage } from 'utils/image'
 
 import QrCodeWithLogo from 'qr-code-with-logo'
 
@@ -9,44 +11,35 @@ class App extends Component {
 	state = {
 		imageUrl: '',
 		text: '',
+		title: '',
 	}
 
 	componentDidMount() {
-		this.updateDataByParams()
+		this.updateDefaultData()
 	}
 
 	componentDidUpdate() {
+		this.updateData()
 		this.updateQr()
 	}
 
-	updateDataByParams() {
-		const urlParams = new URLSearchParams(window.location.search);
-		const imageUrl = urlParams.get('imageUrl') || localStorage.getItem('imageUrl') || '';
-		const text = urlParams.get('text') || localStorage.getItem('text') || '';
-		this.setState({ imageUrl, text })
+	updateDefaultData() {
+		const defaultState = getDefaultData(['imageUrl', 'text', 'title'])
+		this.setState(defaultState)
 	}
 
 	onChange = ({ target: { value, name }}) => {
 		this.setState({ [name] : value })
 	}
 
+	updateData() {
+		updateQS(this.state)
+		updateLocalStorage(this.state)
+	}
+
 	async updateQr() {
 		const { imageUrl, text } = this.state
-		localStorage.setItem('imageUrl', imageUrl)
-		localStorage.setItem('text', text)
-		window.history.pushState(null, '', `?text=${text}&imageUrl=${imageUrl}`)
-		let imageData
-		if (imageUrl) {
-			const res = await fetch(imageUrl)
-			if (res.blob) {
-				const blob = await res.blob()
-				imageData = await new Promise(resolve => {
-					const reader = new FileReader()
-					reader.onload = () => resolve(reader.result)
-					reader.readAsDataURL(blob)
-				})
-			}
-		}
+		let imageData = await loadDataUrlFromImage(imageUrl)
 		const logo = imageData ? {
 			src: imageData,
 		} : {
@@ -60,20 +53,20 @@ class App extends Component {
 			download: true,
 			downloadName: `${text}.png`,
 			logo: logo,
-		})
+		}).then(this.updateTitle)
 	}
 
-	save = () => {
-		if (this.qr && this.download) {
-			const image = this.qr
-							.toDataURL("image/png")
-							.replace("image/png", "image/octet-stream")
-			this.download.setAttribute('href', image)
-		}
+	updateTitle = () => {
+		const { title } = this.state
+		const context = this.qr.getContext('2d')
+		context.font = '14px Kanit'
+		context.fillStyle = 'black'
+		context.textAlign = 'center'
+		context.fillText(title || '', this.qr.width/2, this.qr.height)
 	}
 
   	render() {
-		const { imageUrl, text } = this.state
+		const { imageUrl, text, title } = this.state
     	return (
 			<div style={{
 					display: 'flex',
@@ -127,6 +120,15 @@ class App extends Component {
 									marginBottom: 16
 								}}
 							/>
+							<Input
+								name="title"
+								placeholder="Title (optional)"
+								onChange={this.onChange}
+								value={title}
+								style={{
+									marginBottom: 16
+								}}
+							/>
 							<a
 								ref={e => this.download = e}
 								download={`${text}.png`}	
@@ -138,7 +140,7 @@ class App extends Component {
 									style={{	
 										width: '100%',	
 									}}
-									onClick={this.save}
+									onClick={() => downloadImage(this.qr, this.download)}
 								>	
 									Download	
 								</Button>	
