@@ -2,6 +2,7 @@ import 'antd/dist/antd.css'
 
 import { Card, Col, Input, Row, Button, Checkbox } from 'antd'
 import React, { Component } from 'react'
+import FontFaceObserver from 'fontfaceobserver'
 import { getDefaultData, updateQS, updateLocalStorage } from 'utils/data'
 import { loadDataUrlFromImage, downloadImage } from 'utils/image'
 
@@ -17,6 +18,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.updateDefaultData()
+		this.reRenderQRWhenFontIsLoaded()
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -54,7 +56,7 @@ class App extends Component {
 		}
 	}
 
-	async updateQr() {
+	updateQr = async () => {
 		const { imageUrl, text } = this.state
 		let imageData = await loadDataUrlFromImage(imageUrl)
 		const logo = imageData ? {
@@ -80,6 +82,11 @@ class App extends Component {
 		context.fillStyle = 'black'
 		context.textAlign = 'center'
 		context.fillText(title || '', this.qr.width/2, this.qr.height - 14)
+	}
+
+	reRenderQRWhenFontIsLoaded() {
+		const kanit = new FontFaceObserver('Kanit')
+		kanit.load().then(this.updateQr)
 	}
 
   	render() {

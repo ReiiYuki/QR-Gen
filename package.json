@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.12.1",
+    "fontfaceobserver": "^2.1.0",
     "qr-code-with-logo": "^1.1.0",
     "qs": "^6.6.0",
     "react": "^16.7.0",
