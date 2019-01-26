@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/ReiiYuki/QR-Gen/compare/v1.0.2...v1.0.3) (2019-01-26)
+
+
+### Bug Fixes
+
+* Add Margin to Title ([52ccab1](https://github.com/ReiiYuki/QR-Gen/commit/52ccab1))
+* Observe and rerender QR when Kanit is loaded! ([44589f9](https://github.com/ReiiYuki/QR-Gen/commit/44589f9))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/ReiiYuki/QR-Gen/compare/v1.0.1...v1.0.2) (2019-01-26)
 
