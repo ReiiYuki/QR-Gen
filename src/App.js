@@ -1,6 +1,6 @@
 import 'antd/dist/antd.css'
 
-import { Card, Col, Input, Row } from 'antd'
+import { Card, Col, Input, Row, Button } from 'antd'
 import React, { Component } from 'react'
 
 import QrCodeWithLogo from 'qr-code-with-logo'
@@ -10,8 +10,6 @@ class App extends Component {
 		imageUrl: '',
 		text: '',
 	}
-
-	qr = null
 
 	componentDidMount() {
 		this.updateDataByParams()
@@ -37,16 +35,40 @@ class App extends Component {
 		localStorage.setItem('imageUrl', imageUrl)
 		localStorage.setItem('text', text)
 		window.history.pushState(null, '', `?text=${text}&imageUrl=${imageUrl}`)
-		if (text) {
-			await QrCodeWithLogo.toCanvas({
-				canvas: this.qr,
-				width: 480,
-				content: text,
-				logo: {
-					src: imageUrl,
-				}
-			})
-			this.qr.fillText(text, 24, 450)
+		let imageData
+		if (imageUrl) {
+			const res = await fetch(imageUrl)
+			if (res.blob) {
+				const blob = await res.blob()
+				imageData = await new Promise(resolve => {
+					const reader = new FileReader()
+					reader.onload = () => resolve(reader.result)
+					reader.readAsDataURL(blob)
+				})
+			}
+		}
+		const logo = imageData ? {
+			src: imageData,
+		} : {
+			logoSize: 0,
+			borderSize: 0,
+		}
+		text && QrCodeWithLogo.toCanvas({
+			canvas: this.qr,
+			width: 480,
+			content: text,
+			download: true,
+			downloadName: `${text}.png`,
+			logo: logo,
+		})
+	}
+
+	save = () => {
+		if (this.qr && this.download) {
+			const image = this.qr
+							.toDataURL("image/png")
+							.replace("image/png", "image/octet-stream")
+			this.download.setAttribute('href', image)
 		}
 	}
 
@@ -71,6 +93,7 @@ class App extends Component {
 						<Col span={24} style={{ display: 'flex', justifyContent: 'center', padding: 16 }}>
 							<canvas
 								ref={e => this.qr = e}
+								crossOrigin="Anonymous"
 								style={{
 									width: 480,
 									height: 480,
@@ -104,6 +127,22 @@ class App extends Component {
 									marginBottom: 16
 								}}
 							/>
+							<a
+								ref={e => this.download = e}
+								download={`${text}.png`}	
+							>	
+								<Button	
+									type="primary"	
+									icon="download"	
+									size="large"	
+									style={{	
+										width: '100%',	
+									}}
+									onClick={this.save}
+								>	
+									Download	
+								</Button>	
+							</a>
 							<span>Powered by ReiiYuki on <a href="https://github.com/ReiiYuki/QR-Gen">https://github.com/ReiiYuki/QR-Gen</a></span>
 						</Col>
 					</Row>
