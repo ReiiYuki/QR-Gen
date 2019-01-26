@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "QR Generator!",
+  "name": "QR Code Generator by ReiiYuki",
   "icons": [
     {
       "src": "favicon.ico",
